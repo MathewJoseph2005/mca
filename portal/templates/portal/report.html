@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Student Report - {{ student.name }}</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f7fa;
+            margin: 0;
+            padding: 0;
+            color: #333;
+        }
+        .container {
+            width: 80%;
+            margin: 30px auto;
+            background-color: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+        }
+        .header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        .header h1 {
+            color: #007BFF;
+            font-size: 2.5em;
+        }
+        .section {
+            margin-bottom: 20px;
+        }
+        .section h2 {
+            color: #007BFF;
+            font-size: 1.8em;
+            margin-bottom: 10px;
+        }
+        .section p {
+            font-size: 1.1em;
+            line-height: 1.6;
+        }
+        .status {
+            font-weight: bold;
+            color: #28a745;
+        }
+        .revoke {
+            font-weight: bold;
+            color: #dc3545;
+        }
+        .button-container {
+            text-align: center;
+            margin-top: 30px;
+        }
+        .button {
+            background-color: #007BFF;
+            color: white;
+            padding: 10px 20px;
+            font-size: 1.1em;
+            text-decoration: none;
+            border-radius: 5px;
+            margin-top: 10px;
+            display: inline-block;
+        }
+        .button:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <div class="header">
+        <h1>Student Report</h1>
+        <p>Detailed Information for {{ student.name }}</p>
+    </div>
+
+    <div class="section">
+        <h2>Personal Information</h2>
+        <p><strong>Student ID:</strong> {{ student.id }}</p>
+        <p><strong>Name:</strong> {{ student.name }}</p>
+        <p><strong>Email:</strong> {{ student.email }}</p>
+        <p><strong>Phone:</strong> {{ student.phone }}</p>
+    </div>
+
+    <div class="section">
+        <h2>Admission Status</h2>
+        <p><strong>Approved:</strong> 
+            {% if student.approved %}
+                <span class="status">Yes</span>
+            {% else %}
+                <span class="revoke">No</span>
+            {% endif %}
+        </p>
+        <p><strong>Documents Submitted:</strong> {{ student.documents_submitted }}</p>
+        <p><strong>Last Updated:</strong> {{ student.last_updated }}</p>
+    </div>
+
+    <div class="button-container">
+        <a href="{% url 'portal:toggle_approval' student.id %}" class="button">
+            {% if student.approved %}
+                Revoke Approval
+            {% else %}
+                Approve Student
+            {% endif %}
+        </a>
+
+        <a href="{% url 'portal:generate_report' student.id %}" class="button">Generate Report</a>
+    </div>
+</div>
+
+</body>
+</html>

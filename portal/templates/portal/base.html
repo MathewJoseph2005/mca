@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MCA Admission</title>
+</head>
+<body>
+    {% if user.is_authenticated %}
+        <p>Hello, {{ user.username }} ({{ user.profile.get_role_display }})</p>
+        <a href="{% url 'portal:dashboard' %}">Dashboard</a>
+        {% if user.profile.role == 'admin' %}
+            <a href="{% url 'admin_dashboard' %}">Admin Dashboard</a> <!-- Admin specific link -->
+        {% endif %}
+        <a href="{% url 'logout' %}">Logout</a>
+    {% else %}
+        <a href="{% url 'login' %}">Login</a>
+    {% endif %}
+    {% block content %}
+    {% endblock %}
+</body>
+</html>

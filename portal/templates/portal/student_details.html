@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Student Details - MCA Admission Portal</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f4f7f6;
+            margin: 0;
+            padding: 0;
+        }
+
+        .container {
+            width: 80%;
+            margin: 50px auto;
+            background-color: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        h1 {
+            color: #4CAF50;
+            text-align: center;
+        }
+
+        p {
+            font-size: 1.1em;
+            color: #333;
+            margin: 10px 0;
+        }
+
+        .student-info {
+            margin-bottom: 30px;
+        }
+
+        .form-group {
+            text-align: center;
+        }
+
+        button {
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            padding: 12px 20px;
+            font-size: 1.2em;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        button:hover {
+            background-color: #45a049;
+        }
+
+        a {
+            display: block;
+            text-align: center;
+            margin-top: 20px;
+            color: #4CAF50;
+            font-size: 1.1em;
+            text-decoration: none;
+        }
+
+        a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Student Details for {{ student.name }}</h1>
+        <div class="student-info">
+            <p><strong>Application Number:</strong> {{ student.application_number }}</p>
+            <p><strong>Date of Birth:</strong> {{ student.date_of_birth }}</p>
+            <p><strong>Phone:</strong> {{ student.student_phone }}</p>
+            <p><strong>Address:</strong> {{ student.address }}</p>
+            <p><strong>Qualification:</strong> {{ student.qualification }}</p>
+            <p><strong>Email:</strong> {{ student.email }}</p>
+            <p><strong>Gender:</strong> {{ student.gender }}</p>
+            <p><strong>Status:</strong> {{ student.status }}</p>
+            <p><strong>Approved:</strong> {% if student.approved %}Yes{% else %}No{% endif %}</p>
+            <!-- Add other fields as needed -->
+        </div>
+
+        <form method="post" action="{% url 'portal:toggle_approval' student.id %}" class="form-group">
+            {% csrf_token %}
+            <button type="submit">
+                {% if not student.approved %}
+                    Approve
+                {% else %}
+                    Revoke Approval
+                {% endif %}
+            </button>
+        </form>
+
+        <a href="{% url 'portal:generate_report' student.id %}">Generate Report</a>
+
+    </div>
+</body>
+</html>

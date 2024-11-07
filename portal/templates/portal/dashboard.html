@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard - MCA Admission Portal</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f7f6;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        .dashboard-container {
+            background-color: white;
+            width: 80%;
+            max-width: 1200px;
+            padding: 20px;
+            margin-top: 50px;
+            border-radius: 10px;
+            box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.1);
+        }
+        h1 {
+            text-align: center;
+            color: #333;
+        }
+        .students-list {
+            list-style-type: none;
+            padding: 0;
+        }
+        .students-list li {
+            padding: 10px;
+            border: 1px solid #ccc;
+            margin-bottom: 10px;
+            border-radius: 5px;
+            background-color: #fafafa;
+        }
+        .student-info {
+            display: flex;
+            justify-content: space-between;
+        }
+        .student-info .details {
+            flex-grow: 1;
+        }
+        .button {
+            background-color: #4CAF50;
+            color: white;
+            padding: 10px 20px;
+            border-radius: 5px;
+            text-decoration: none;
+            font-size: 1rem;
+            display: inline-block;
+            margin-bottom: 20px;
+        }
+        .button:hover {
+            background-color: #45a049;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="dashboard-container">
+        <h1>Dashboard</h1>
+
+        {% if is_admin %}
+            <a href="{% url 'portal:add_student' %}" class="button">Add New Student</a>
+        {% endif %}
+
+        <h3>Students List</h3>
+        <ul class="students-list">
+            {% for student in students %}
+                <li>
+                    <div class="student-info">
+                        <div class="details">
+                            <a href="{% url 'portal:student_details' student.id %}">{{ student.name }}</a>
+                            <p><strong>Interview Score:</strong> {{ student.interview_score }}</p>
+                        </div>
+                        <div>
+                            <a href="{% url 'portal:submit_documents' student.id %}" class="button">Submit Documents</a>
+                        </div>
+                    </div>
+                </li>
+            {% endfor %}
+        </ul>
+    </div>
+
+</body>
+</html>
